@@ -16,12 +16,22 @@ class ViewWorkoutSplit extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.indigo,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(top: 90.0),
+        child: ElevatedButton.icon(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            Navigator.pushNamed(context, '/add_workout_split');
+          },
+          label: Text("Add"),
+        ),
+      ),
       backgroundColor: Colors.indigo,
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 50),
-            SizedBox(height: 80),
+            SizedBox(height: 180),
             ...List.generate(3, (idx) {
               return Stack(
                 children: [
@@ -48,6 +58,7 @@ class ViewWorkoutSplit extends StatelessWidget {
                 ],
               );
             }),
+            SizedBox(height: 20),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lifters_anonymous/add_workout_split.dart';
 import 'package:lifters_anonymous/home_page.dart';
 import 'package:lifters_anonymous/view_workout_split.dart';
 
@@ -15,7 +16,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.lightBlue),
       home: const HomePage(),
-      routes: {'/view_workout_split': (context) => ViewWorkoutSplit()},
+      routes: {
+        '/view_workout_split': (context) => ViewWorkoutSplit(),
+        '/add_workout_split': (context) => AddWorkoutSplit(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }
