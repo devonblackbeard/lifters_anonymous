@@ -1,65 +1,97 @@
 import 'package:flutter/material.dart';
+import 'add_workout_split.dart'; // <-- Make sure this import path is correct
 
-class ViewWorkoutSplit extends StatelessWidget {
-  ViewWorkoutSplit({super.key});
+class ViewWorkoutSplit extends StatefulWidget {
+  const ViewWorkoutSplit({super.key});
 
+  @override
+  State<ViewWorkoutSplit> createState() => _ViewWorkoutSplitState();
+}
+
+class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
+  // Start with initial items
   List<String> splitTypes = ["Push", "Pull", "Legs"];
+
+  void _navigateToAddSplit() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddWorkoutSplit()),
+    );
+
+    if (result != null && result is String && result.trim().isNotEmpty) {
+      setState(() {
+        splitTypes.add(result.trim());
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Select Routine", style: TextStyle(color: Colors.white)),
-        iconTheme: IconThemeData(
-          color: Colors.white, // back button color
+        title: const Text(
+          "Select Routine",
+          style: TextStyle(color: Colors.white),
         ),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.black,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(top: 90.0),
-        child: ElevatedButton.icon(
-          icon: Icon(Icons.add),
-          onPressed: () {
-            Navigator.pushNamed(context, '/add_workout_split');
-          },
-          label: Text("Add"),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateToAddSplit,
+        backgroundColor: const Color.fromARGB(255, 146, 46, 141),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
-      backgroundColor: Colors.indigo,
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(height: 180),
-            ...List.generate(3, (idx) {
-              return Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 190,
-                      height: 60,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: const Color.fromARGB(
-                            255,
-                            146,
-                            46,
-                            141,
-                          ),
-                        ),
-                        child: Text(splitTypes[idx]),
-                      ),
-                    ),
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 40.0),
+        child: ListView.builder(
+          padding: const EdgeInsets.all(12),
+          itemCount: splitTypes.length,
+          itemBuilder: (context, idx) {
+            final split = splitTypes[idx];
+
+            return Dismissible(
+              key: ValueKey(split),
+              direction: DismissDirection.endToStart, // swipe left to right
+              onDismissed: (direction) {
+                setState(() {
+                  splitTypes.removeAt(idx);
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Removed $split"),
+                    duration: const Duration(seconds: 1),
                   ),
-                ],
-              );
-            }),
-            SizedBox(height: 20),
-          ],
+                );
+              },
+              background: Container(
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                color: Colors.red,
+                child: const Text(
+                  "Delete",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  title: Text(split),
+                  trailing: Icon(Icons.chevron_right_sharp),
+                  onTap: () {
+                    // TODO: Handle item tap
+                  },
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
