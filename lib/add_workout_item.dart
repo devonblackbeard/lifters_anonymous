@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class AddWorkoutSplit extends StatelessWidget {
-  AddWorkoutSplit({super.key});
+class AddWorkoutItem extends StatelessWidget {
+  final String type;
+  AddWorkoutItem({super.key, required this.type});
 
   final TextEditingController _controller = TextEditingController();
 
@@ -19,8 +20,10 @@ class AddWorkoutSplit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Type value: $type');
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Workout Split")),
+      appBar: AppBar(title: Text("Add Workout $type")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -28,8 +31,8 @@ class AddWorkoutSplit extends StatelessWidget {
           children: [
             TextField(
               controller: _controller,
-              decoration: const InputDecoration(
-                labelText: "Workout Name",
+              decoration: InputDecoration(
+                labelText: "Workout $type name",
                 border: OutlineInputBorder(),
               ),
               onSubmitted: (_) => _submit(context),
@@ -37,7 +40,7 @@ class AddWorkoutSplit extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => _submit(context),
-              child: const Text("Add Split"),
+              child: Text("Add $type"),
             ),
           ],
         ),

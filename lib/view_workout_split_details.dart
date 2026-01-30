@@ -1,62 +1,54 @@
 import 'package:flutter/material.dart';
-import 'add_workout_item.dart'; // <-- Make sure this import path is correct
+import 'package:lifters_anonymous/add_workout_item.dart';
+import 'package:lifters_anonymous/view_move_history.dart';
 
-class ViewWorkoutSplit extends StatefulWidget {
-  const ViewWorkoutSplit({super.key});
+class ViewWorkoutSplitDetails extends StatefulWidget {
+  const ViewWorkoutSplitDetails({super.key});
 
   @override
-  State<ViewWorkoutSplit> createState() => _ViewWorkoutSplitState();
+  State<ViewWorkoutSplitDetails> createState() =>
+      _ViewWorkoutSplitDetailsState();
 }
 
-class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
-  // Start with initial items
-  List<String> splitTypes = ["Push", "Pull", "Legs"];
-
-  void _navigateToAddSplit() async {
+class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
+  void _navigateToAddMove() async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddWorkoutItem(type:'split')),
+      MaterialPageRoute(builder: (context) => AddWorkoutItem(type: 'move')),
     );
 
     if (result != null && result is String && result.trim().isNotEmpty) {
       setState(() {
-        splitTypes.add(result.trim());
+        moves.add(result.trim());
       });
     }
   }
 
+  List<String> moves = ['A', 'B', 'C'];
   @override
   Widget build(BuildContext context) {
+    final split = ModalRoute.of(context)?.settings.arguments as String?;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Select Routine",
-          style: TextStyle(color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(title: Text(split ?? 'unknown')),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToAddSplit,
+        onPressed: _navigateToAddMove,
         backgroundColor: const Color.fromARGB(255, 146, 46, 141),
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.only(top: 40.0),
         child: ListView.builder(
           padding: const EdgeInsets.all(12),
-          itemCount: splitTypes.length,
+          itemCount: moves.length,
           itemBuilder: (context, idx) {
-            final split = splitTypes[idx];
+            final split = moves[idx];
             return Dismissible(
               key: ValueKey(split),
               direction: DismissDirection.endToStart, // swipe left to right
               onDismissed: (direction) {
                 setState(() {
-                  splitTypes.removeAt(idx);
+                  moves.removeAt(idx);
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -86,12 +78,13 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
                   trailing: Icon(Icons.chevron_right_sharp),
                   onTap: () {
                     // TODO: Handle item tap
-                    print('Tapped on $split');
-                    Navigator.pushNamed(
-                      context,
-                      '/workout_split_details',
-                      arguments: split,
-                    );
+                    print('Tapped onf $split');
+                    // Navigator.pushNamed(
+                    //   context,
+                    //   '/view_move_history',
+                    //   arguments: split,
+                    // );
+                    callViewMove(split);
                   },
                 ),
               ),
@@ -99,6 +92,13 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
           },
         ),
       ),
+    );
+  }
+
+  void callViewMove(String split) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ViewMoveHistory(moveName: split)),
     );
   }
 }
