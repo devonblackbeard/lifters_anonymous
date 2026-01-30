@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'add_workout_item.dart'; // <-- Make sure this import path is correct
+import 'add_workout_item.dart';
 
 class ViewWorkoutSplit extends StatefulWidget {
   const ViewWorkoutSplit({super.key});
@@ -31,11 +31,11 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
       appBar: AppBar(
         title: const Text(
           "Select Routine",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
-        iconTheme: const IconThemeData(color: Colors.white),
+        //iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
@@ -43,7 +43,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
         backgroundColor: const Color.fromARGB(255, 146, 46, 141),
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.only(top: 40.0),
         child: ListView.builder(
