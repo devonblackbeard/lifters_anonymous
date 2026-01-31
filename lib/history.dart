@@ -7,10 +7,19 @@ class History extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('History')),
-      body: Center(
-        child: ListView.builder(
-          itemBuilder: (context, index) => historicalItemCard(index + 1),
-          itemCount: 35,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: FloatingActionButton(
+        onPressed: addCalendarEntry,
+        backgroundColor: const Color.fromARGB(255, 146, 46, 141),
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 40.0),
+        child: Center(
+          child: ListView.builder(
+            itemBuilder: (context, index) => historicalItemCard(index + 1),
+            itemCount: 35,
+          ),
         ),
       ),
     );
@@ -50,4 +59,6 @@ class History extends StatelessWidget {
       ),
     );
   }
+
+  void addCalendarEntry() {}
 }

@@ -53,7 +53,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
             final split = splitTypes[idx];
             return Dismissible(
               key: ValueKey(split),
-              direction: DismissDirection.endToStart, // swipe left to right
+              direction: DismissDirection.endToStart,
               onDismissed: (direction) {
                 setState(() {
                   splitTypes.removeAt(idx);
