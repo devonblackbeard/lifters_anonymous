@@ -7,15 +7,20 @@ class History extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('History')),
-      body: Center(child: historicalItemCard()),
+      body: Center(
+        child: ListView.builder(
+          itemBuilder: (context, index) => historicalItemCard(index + 1),
+          itemCount: 35,
+        ),
+      ),
     );
   }
 
-  Widget historicalItemCard() {
+  Widget historicalItemCard(int dateVariable) {
     return Card(
-      elevation: 12,
+      elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.fromLTRB(20, 12, 20, 12),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
@@ -26,7 +31,7 @@ class History extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Mon, January 29',
+                    'Mon, January $dateVariable',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),

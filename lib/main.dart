@@ -53,6 +53,7 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.fitness_center),
