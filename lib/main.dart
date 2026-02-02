@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lifters_anonymous/add_workout_item.dart';
 import 'package:lifters_anonymous/history.dart';
 import 'package:lifters_anonymous/fasting.dart';
-// import 'package:lifters_anonymous/home_page.dart';
-// import 'package:lifters_anonymous/view_move_history.dart';
+import 'package:lifters_anonymous/models/workout.dart';
 import 'package:lifters_anonymous/view_workout_split.dart';
 import 'package:lifters_anonymous/view_workout_split_details.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Add this line!
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(WorkoutAdapter()); // Register the adapter
+  Hive.registerAdapter(MoveAdapter()); // Register the adapter
+
+  var workoutBox = await Hive.openBox<Workout>(
+    'workoutDataBox',
+  ); // keep this as a manual string
+  await workoutBox
+      .clear(); // Remove this line after first run if you want to keep data
   runApp(const MyApp());
 }
 
