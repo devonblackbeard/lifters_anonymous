@@ -11,7 +11,7 @@ class ViewWorkoutSplit extends StatefulWidget {
 }
 
 class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
-  void _navigateToAddSplit() async {
+  void navigateToAddSplit() async {
     final myBox = Database.workoutBox;
 
     final result = await Navigator.push(
@@ -32,7 +32,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
     }
   }
 
-  void _navigateToWorkoutDetails(Workout split) async {
+  void navigateToWorkoutDetails(Workout split) async {
     // Navigate and await the return
     await Navigator.pushNamed(
       context,
@@ -45,7 +45,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
     setState(() {});
   }
 
-  void _deleteSplitType(int idx) {
+  void deleteSplitType(int idx) {
     final myBox = Database.workoutBox;
     final workouts = myBox.values.toList();
     final split = workouts[idx];
@@ -78,7 +78,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToAddSplit,
+        onPressed: navigateToAddSplit,
         backgroundColor: const Color.fromARGB(255, 146, 46, 141),
         child: const Icon(Icons.add, color: Colors.white),
       ),
@@ -97,7 +97,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
                     key: ValueKey(split.id),
                     direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
-                      _deleteSplitType(idx);
+                      deleteSplitType(idx);
                     },
                     background: Container(
                       alignment: Alignment.centerRight,
@@ -120,7 +120,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
                         trailing: const Icon(Icons.chevron_right_sharp),
                         onTap: () {
                           print('Tapped on ${split.name} with ID: ${split.id}');
-                          _navigateToWorkoutDetails(split); // Changed this line
+                          navigateToWorkoutDetails(split); // Changed this line
                         },
                       ),
                     ),

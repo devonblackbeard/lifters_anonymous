@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:lifters_anonymous/add_workout_item.dart';
 
-class History extends StatelessWidget {
+class History extends StatefulWidget {
   const History({super.key});
+
+  @override
+  State<History> createState() => _HistoryState();
+}
+
+class _HistoryState extends State<History> {
+  void navigateToAddCalendarEntry() async {
+    print('Add calendar entry');
+    final newWorkout = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddWorkoutItem(type: 'workoutEvent'),
+      ),
+    );
+    print('Returned from adding calendar entry$newWorkout');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +26,7 @@ class History extends StatelessWidget {
       appBar: AppBar(title: const Text('History')),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
-        onPressed: addCalendarEntry,
+        onPressed: navigateToAddCalendarEntry,
         backgroundColor: const Color.fromARGB(255, 146, 46, 141),
         child: const Icon(Icons.add, color: Colors.white),
       ),
@@ -59,6 +76,4 @@ class History extends StatelessWidget {
       ),
     );
   }
-
-  void addCalendarEntry() {}
 }
