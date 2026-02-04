@@ -9,69 +9,214 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
+  // Define consistent brand colors
+  static const Color primaryColor = Color(0xFF922E8D);
+  static const Color primaryLight = Color(0xFFB85FB3);
+  static const Color surfaceColor = Color(0xFFF5F5F5);
+
   void navigateToAddCalendarEntry() async {
     print('Add calendar entry');
     final newWorkout = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddWorkoutItem(type: 'Session'),
+        builder: (context) => const AddWorkoutItem(type: 'Session'),
       ),
     );
     print('Returned from adding calendar entry$newWorkout');
   }
 
+  String formatDate(int day) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    // Mock: using January for all entries
+    String dayStr = day.toString().padLeft(2, '0');
+    return '${months[0]} $dayStr 2026';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('History')),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: FloatingActionButton(
-        onPressed: navigateToAddCalendarEntry,
-        backgroundColor: const Color.fromARGB(255, 146, 46, 141),
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 40.0),
-        child: Center(
-          child: ListView.builder(
-            itemBuilder: (context, index) => historicalItemCard(index + 1),
-            itemCount: 35,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black87,
+        title: const Text(
+          'History',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: IconButton(
+              onPressed: navigateToAddCalendarEntry,
+              icon: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [primaryColor, primaryLight],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        itemBuilder: (context, index) => historicalItemCard(index + 1),
+        itemCount: 35,
       ),
     );
   }
 
   Widget historicalItemCard(int dateVariable) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      margin: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Mon, January $dateVariable',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: surfaceColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.grey.shade200,
+          width: 1,
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            // Handle tap
+            print('Tapped on entry $dateVariable');
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                // Date icon
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [primaryColor, primaryLight],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  SizedBox(height: 8),
-                  Text('Push workout', style: TextStyle(fontSize: 16)),
-                  SizedBox(height: 4),
-                  Text(
-                    '14 hour fast',
-                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'JAN',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.9),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        dateVariable.toString().padLeft(2, '0'),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 16),
+                // Content
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Push Workout',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.timer_outlined,
+                            size: 16,
+                            color: Colors.grey.shade600,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '14 hour fast',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.fitness_center,
+                            size: 16,
+                            color: Colors.grey.shade600,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '8 exercises',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                // Chevron
+                Icon(
+                  Icons.chevron_right,
+                  size: 28,
+                  color: Colors.grey.shade400,
+                ),
+              ],
             ),
-            Icon(Icons.chevron_right, size: 32, color: Colors.grey[600]),
-          ],
+          ),
         ),
       ),
     );

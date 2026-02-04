@@ -16,5 +16,10 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
+TODOs:
+- have a stats page, ie how many workouts in total have been logged.
+- show max weight per move (PR)
+
+
 Commands:
 flutter pub run build_runner build
