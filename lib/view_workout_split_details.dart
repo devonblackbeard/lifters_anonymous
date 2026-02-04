@@ -51,7 +51,7 @@ class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
   void navigateToAddMove() async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddWorkoutItem(type: 'move')),
+      MaterialPageRoute(builder: (context) => AddWorkoutItem(type: 'Move')),
     );
 
     if (result != null && result is String && result.trim().isNotEmpty) {

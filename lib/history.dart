@@ -14,7 +14,7 @@ class _HistoryState extends State<History> {
     final newWorkout = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddWorkoutItem(type: 'workoutEvent'),
+        builder: (context) => AddWorkoutItem(type: 'Session'),
       ),
     );
     print('Returned from adding calendar entry$newWorkout');

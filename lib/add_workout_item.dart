@@ -22,7 +22,7 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
   }
 
   void submit(BuildContext context) {
-    if (widget.type == 'workoutEvent') {
+    if (widget.type == 'Session') {
       // For workout events, return the selected workout ID and date
       if (selectedWorkoutId != null && selectedDate != null) {
         Navigator.pop(context, {
@@ -60,10 +60,10 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
 
   Widget buildForm(BuildContext context) {
     switch (widget.type) {
-      case 'split':
-      case 'move':
+      case 'Split':
+      case 'Move':
         return _buildSplitForm(context);
-      case 'workoutEvent':
+      case 'Session':
         return _buildWorkoutEventForm(context);
       default:
         return Center(child: Text('Unknown type: ${widget.type}'));
@@ -72,15 +72,37 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
 
   Widget _buildWorkoutEventForm(BuildContext context) {
     final workouts = Database.workoutBox.values.toList();
+    var selectedDate = DateTime.now();
+
+    String formatDate(DateTime date) {
+      const months = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+      String day = date.day.toString().padLeft(2, '0');
+      return '${months[date.month - 1]} $day ${date.year}';
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         DropdownButtonFormField<String>(
-          value: selectedWorkoutId,
+          initialValue: selectedWorkoutId,
           decoration: const InputDecoration(
             labelText: 'Select Workout',
-            border: OutlineInputBorder(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(18)),
+            ),
           ),
           items:
               workouts.map((workout) {
@@ -97,10 +119,16 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
         ),
         const SizedBox(height: 16),
         OutlinedButton.icon(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.black,
+            side: const BorderSide(
+              color: Color.fromARGB(255, 146, 46, 141),
+            ),
+          ),
           onPressed: () async {
             final date = await showDatePicker(
               context: context,
-              initialDate: DateTime.now(),
+              initialDate: selectedDate,
               firstDate: DateTime(2020),
               lastDate: DateTime(2030),
             );
@@ -111,14 +139,14 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
             }
           },
           icon: const Icon(Icons.calendar_today),
-          label: Text(
-            selectedDate == null
-                ? 'Select Date'
-                : '${selectedDate!.month}/${selectedDate!.day}/${selectedDate!.year}',
-          ),
+          label: Text(formatDate(selectedDate)),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 76),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 146, 46, 141),
+            foregroundColor: Colors.white,
+          ),
           onPressed: () => submit(context),
           child: const Text("Start Workout!"),
         ),
@@ -135,15 +163,20 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
           decoration: InputDecoration(
             labelText: "${widget.type} name",
             hintText:
-                widget.type == 'split'
+                widget.type == 'Split'
                     ? "e.g., Push, Pull, Legs"
                     : "e.g., Bench Press, Squats",
-            border: const OutlineInputBorder(),
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(18)),
+            ),
           ),
           onSubmitted: (_) => submit(context),
         ),
         const SizedBox(height: 16),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 146, 46, 141),
+          ),
           onPressed: () => submit(context),
           child: Text("Add ${widget.type}"),
         ),

@@ -16,7 +16,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
 
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddWorkoutItem(type: 'split')),
+      MaterialPageRoute(builder: (context) => AddWorkoutItem(type: 'Split')),
     );
 
     if (result != null && result is String && result.trim().isNotEmpty) {
