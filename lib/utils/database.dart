@@ -7,5 +7,5 @@ class Database {
   static Box<Workout> get workoutBox => Hive.box<Workout>('workoutDataBox');
 
   // static Box get fastingBox => Hive.box('fastingDataBox');
-  // static Box get historyBox => Hive.box('historyDataBox');
+  static Box<Session> get sessionBox => Hive.box<Session>('sessionDataBox');
 }

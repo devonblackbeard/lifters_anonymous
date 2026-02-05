@@ -19,7 +19,17 @@ samples, guidance on mobile development, and a full API reference.
 TODOs:
 - have a stats page, ie how many workouts in total have been logged.
 - show max weight per move (PR)
+- give reminders when its time to start a fast
+
+Potential app names:
+- RepRaise
+- Grindset
+- RepRise
+- LiftLegacy
+
+
 
 
 Commands:
-flutter pub run build_runner build
+flutter pub run build_runner build //deprecated
+dart run

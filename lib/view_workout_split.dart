@@ -72,7 +72,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
     final key = myBox.keys.elementAt(idx);
 
     myBox.delete(key);
-    setState(() {}); // Trigger rebuild
+    setState(() {});
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

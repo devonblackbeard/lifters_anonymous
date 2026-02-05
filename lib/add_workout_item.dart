@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lifters_anonymous/models/workout.dart';
 import 'package:lifters_anonymous/utils/database.dart';
 
 class AddWorkoutItem extends StatefulWidget {
@@ -30,10 +31,14 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
     if (widget.type == 'Session') {
       // For workout events, return the selected workout ID and date
       if (selectedWorkoutId != null) {
-        Navigator.pop(context, {
-          'workoutId': selectedWorkoutId,
-          'date': selectedDate,
-        });
+        // Navigator.pop(context, {
+        //   'workoutId': selectedWorkoutId,
+        //   'date': selectedDate,
+        // });
+        Navigator.pop(
+          context,
+          SessionDTO(workoutId: selectedWorkoutId!, date: selectedDate),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

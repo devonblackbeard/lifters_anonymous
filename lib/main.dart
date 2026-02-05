@@ -8,15 +8,20 @@ import 'package:lifters_anonymous/view_workout_split.dart';
 import 'package:lifters_anonymous/view_workout_split_details.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Add this line!
+  WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
-  Hive.registerAdapter(WorkoutAdapter()); // Register the adapter
-  Hive.registerAdapter(MoveAdapter()); // Register the adapter
+  Hive.registerAdapter(WorkoutAdapter());
+  Hive.registerAdapter(MoveAdapter());
+  Hive.registerAdapter(SessionAdapter());
 
-  var workoutBox = await Hive.openBox<Workout>(
-    'workoutDataBox',
-  ); // keep this as a manual string
+  var workoutBox = await Hive.openBox<Workout>('workoutDataBox');
+
+  //var sessionBox =
+  await Hive.openBox<Session>('sessionDataBox');
+
+  // keep these as a manual string
+
   await workoutBox
       .clear(); // Remove this line after first run if you want to keep data
   runApp(const MyApp());
