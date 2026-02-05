@@ -16,14 +16,14 @@ void main() async {
   Hive.registerAdapter(SessionAdapter());
 
   var workoutBox = await Hive.openBox<Workout>('workoutDataBox');
-
-  //var sessionBox =
-  await Hive.openBox<Session>('sessionDataBox');
+  var sessionBox = await Hive.openBox<Session>('sessionDataBox');
 
   // keep these as a manual string
 
-  await workoutBox
-      .clear(); // Remove this line after first run if you want to keep data
+  await workoutBox.clear();
+  await sessionBox.clear();
+
+  // Remove this line after first run if you want to keep data
   runApp(const MyApp());
 }
 

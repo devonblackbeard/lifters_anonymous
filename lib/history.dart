@@ -142,126 +142,7 @@ class _HistoryState extends State<History> {
   //   );
   // }
 
-  //   child: Material(
-  //     color: Colors.transparent,
-  //     child: InkWell(
-  //       borderRadius: BorderRadius.circular(16),
-  //       onTap: () {
-  //         // Handle tap
-  //         print('Tapped on entry $dateVariable');
-  //       },
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(16),
-  //         child: Row(
-  //           children: [
-  //             // Date icon
-  //             Container(
-  //               width: 56,
-  //               height: 56,
-  //               decoration: BoxDecoration(
-  //                 gradient: LinearGradient(
-  //                   colors: [primaryColor, primaryLight],
-  //                   begin: Alignment.topLeft,
-  //                   end: Alignment.bottomRight,
-  //                 ),
-  //                 borderRadius: BorderRadius.circular(12),
-  //               ),
-  //               child: Column(
-  //                 mainAxisAlignment: MainAxisAlignment.center,
-  //                 children: [
-  //                   Text(
-  //                     'JAN',
-  //                     style: TextStyle(
-  //                       color: Colors.white.withOpacity(0.9),
-  //                       fontSize: 11,
-  //                       fontWeight: FontWeight.w600,
-  //                       letterSpacing: 0.5,
-  //                     ),
-  //                   ),
-  //                   const SizedBox(height: 2),
-  //                   Text(
-  //                     dateVariable.toString().padLeft(2, '0'),
-  //                     style: const TextStyle(
-  //                       color: Colors.white,
-  //                       fontSize: 20,
-  //                       fontWeight: FontWeight.bold,
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //             const SizedBox(width: 16),
-  //             // Content
-  //             Expanded(
-  //               child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   Text(
-  //                     'Push Workout',
-  //                     style: TextStyle(
-  //                       fontSize: 17,
-  //                       fontWeight: FontWeight.w600,
-  //                       color: Colors.black87,
-  //                     ),
-  //                   ),
-  //                   const SizedBox(height: 6),
-  //                   Row(
-  //                     children: [
-  //                       Icon(
-  //                         Icons.timer_outlined,
-  //                         size: 16,
-  //                         color: Colors.grey.shade600,
-  //                       ),
-  //                       const SizedBox(width: 6),
-  //                       Text(
-  //                         '14 hour fast',
-  //                         style: TextStyle(
-  //                           fontSize: 14,
-  //                           color: Colors.grey.shade600,
-  //                           fontWeight: FontWeight.w500,
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                   const SizedBox(height: 4),
-  //                   Row(
-  //                     children: [
-  //                       Icon(
-  //                         Icons.fitness_center,
-  //                         size: 16,
-  //                         color: Colors.grey.shade600,
-  //                       ),
-  //                       const SizedBox(width: 6),
-  //                       Text(
-  //                         '8 exercises',
-  //                         style: TextStyle(
-  //                           fontSize: 14,
-  //                           color: Colors.grey.shade600,
-  //                           fontWeight: FontWeight.w500,
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //             // Chevron
-  //             Icon(
-  //               Icons.chevron_right,
-  //               size: 28,
-  //               color: Colors.grey.shade400,
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   ),
-  // );
-
-  _buildSessionCard(session, int idx) {
-    //return Text('YOOO!');
-    print('CALLED');
-
+  _buildSessionCard(Session session, int idx) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -290,7 +171,9 @@ class _HistoryState extends State<History> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      session.date.month.toString().padLeft(2, '0'),
+                      getMonthName(
+                        session.date.month,
+                      ), //.toString().padLeft(2, '0'),
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.9),
                         fontSize: 11,
@@ -317,7 +200,7 @@ class _HistoryState extends State<History> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      session.workoutId,
+                      getWorkout(session.workoutId).name,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
@@ -353,7 +236,7 @@ class _HistoryState extends State<History> {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          '8 exercises',
+                          '${getWorkout(session.workoutId).moves.length} exercises',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey.shade600,
@@ -372,5 +255,32 @@ class _HistoryState extends State<History> {
         ),
       ),
     );
+  }
+
+  String getMonthName(int month) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return months[month - 1];
+  }
+
+  Workout getWorkout(workoutId) {
+    final workoutBox = Database.workoutBox;
+    final workout = workoutBox.values.firstWhere(
+      (workout) => workout.id == workoutId,
+      orElse: () => Workout(id: 'unknown', name: 'Unknown Workout'),
+    );
+    return workout;
   }
 }
