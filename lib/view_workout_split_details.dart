@@ -34,16 +34,6 @@ class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
     }
   }
 
-  void _reloadWorkout() {
-    final box = Database.workoutBox;
-    final updatedWorkout = box.values.firstWhere(
-      (workout) => workout.id == currentWorkout.id,
-    );
-    setState(() {
-      currentWorkout = updatedWorkout;
-    });
-  }
-
   void handleViewMove(String moveName) async {
     final result = await Navigator.push(
       context,

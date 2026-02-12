@@ -28,6 +28,24 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
   }
 
   void submit(BuildContext context) {
+    if (widget.type == 'Rename') {
+      final text = _controller.text.trim();
+      if (text.isNotEmpty) {
+        Navigator.pop(context, text);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Please enter a name"),
+            backgroundColor: Colors.red.shade400,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
+      }
+      return;
+    }
     if (widget.type == 'Session') {
       // For workout events, return the selected workout ID and date
       if (selectedWorkoutId != null) {
