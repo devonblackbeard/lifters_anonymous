@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lifters_anonymous/utils/database.dart';
 import 'package:lifters_anonymous/models/workout.dart';
 import 'add_workout_item.dart';
+import 'components/rename_routine_dialog.dart';
 
 class ViewWorkoutSplit extends StatefulWidget {
   const ViewWorkoutSplit({super.key});
@@ -339,20 +340,39 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
   }
 
   void renameSplitType(int idx) {
-    print('Rename split at index $idx');
     final myBox = Database.workoutBox;
-    // if (myBox.length > 0) {
-    //   final workouts = myBox.values.toList();
-    //   final split = workouts[idx];
-    //   print('Renaming split: ${split.name}');
-    //   Navigator.pushNamed(
-    //     context,
-    //     '/rename_workout_split',
-    //     arguments: {'type': 'Split', 'action': 'Rename'},
-    //   ).then((value) {
-    //     // Refresh state after returning
-    //     setState(() {});
-    //   });
-    // }
+    final workouts = myBox.values.toList();
+    final split = workouts[idx];
+    final key = myBox.keys.elementAt(idx);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return RenameRoutineDialog(
+          initialName: split.name,
+          primaryColor: primaryColor,
+          onSave: (newName) {
+            final updatedSplit = Workout(
+              id: split.id,
+              name: newName,
+              moves: split.moves,
+            );
+            myBox.put(key, updatedSplit);
+            setState(() {});
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Renamed to $newName'),
+                backgroundColor: primaryColor,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
