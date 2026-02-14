@@ -4,6 +4,7 @@ import 'package:lifters_anonymous/add_workout_item.dart';
 import 'package:lifters_anonymous/history.dart';
 import 'package:lifters_anonymous/fasting.dart';
 import 'package:lifters_anonymous/models/workout.dart';
+import 'package:lifters_anonymous/settings.dart';
 import 'package:lifters_anonymous/view_workout_split.dart';
 import 'package:lifters_anonymous/view_workout_split_details.dart';
 
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/view_workout_split': (context) => ViewWorkoutSplit(),
         '/add_workout_split': (context) => AddWorkoutItem(type: ''),
         '/workout_split_details': (context) => ViewWorkoutSplitDetails(),
+        '/settings': (context) => Settings(),
       },
       debugShowCheckedModeBanner: false,
     );
@@ -56,7 +58,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [History(), ViewWorkoutSplit(), Fasting() ];
+  final List<Widget> _screens = [History(), ViewWorkoutSplit(), Fasting(), Settings() ];
 
   @override
   Widget build(BuildContext context) {
