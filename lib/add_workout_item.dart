@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lifters_anonymous/models/workout.dart';
+import 'package:lifters_anonymous/models/workoutDtos.dart';
 import 'package:lifters_anonymous/utils/database.dart';
 
 class AddWorkoutItem extends StatefulWidget {

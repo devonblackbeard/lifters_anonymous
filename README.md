@@ -20,6 +20,11 @@ TODOs:
 - have a stats page, ie how many workouts in total have been logged.
 - show max weight per move (PR)
 - give reminders when its time to start a fast
+- create settings page:
+    - kg/lbs
+    - PR vs PB
+    - Show fasting in sessions
+    - Show workout duration
 
 Potential app names:
 - RepRaise
@@ -31,5 +36,5 @@ Potential app names:
 
 
 Commands:
-flutter pub run build_runner build //deprecated
+flutter pub run build_runner build // deprecated
 dart run

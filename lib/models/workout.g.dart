@@ -98,13 +98,14 @@ class SessionAdapter extends TypeAdapter<Session> {
       workoutId: fields[2] as String,
       date: fields[1] as DateTime,
       moveRecords: (fields[3] as List).cast<MoveRecord>(),
+      duration: fields[4] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Session obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -112,7 +113,9 @@ class SessionAdapter extends TypeAdapter<Session> {
       ..writeByte(2)
       ..write(obj.workoutId)
       ..writeByte(3)
-      ..write(obj.moveRecords);
+      ..write(obj.moveRecords)
+      ..writeByte(4)
+      ..write(obj.duration);
   }
 
   @override

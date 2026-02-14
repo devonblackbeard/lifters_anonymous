@@ -42,11 +42,15 @@ class Session {
   @HiveField(3)
   final List<MoveRecord> moveRecords;
 
+  @HiveField(4)
+  final int duration; // in minutes
+
   Session({
     required this.id,
     required this.workoutId,
     required this.date,
     required this.moveRecords,
+    required this.duration,
   });
 }
 
@@ -60,13 +64,4 @@ class MoveRecord {
     required this.setsCompleted,
     required this.repsCompleted,
   });
-}
-
-// DTO'S
-
-class SessionDTO {
-  final String workoutId;
-  final DateTime date;
-
-  SessionDTO({required this.workoutId, required this.date});
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lifters_anonymous/add_workout_item.dart';
 import 'package:lifters_anonymous/models/workout.dart';
+import 'package:lifters_anonymous/models/workoutDtos.dart';
 import 'package:lifters_anonymous/utils/database.dart';
 
 class History extends StatefulWidget {
@@ -14,7 +15,78 @@ class _HistoryState extends State<History> {
   // Define consistent brand colors
   static const Color primaryColor = Color(0xFF922E8D);
   static const Color primaryLight = Color(0xFFB85FB3);
-  static const Color surfaceColor = Color(0xFFF5F5F5);
+  //static const Color surfaceColor = Color(0xFFF5F5F5);
+
+  Widget _buildEmptyState() {
+    final workoutBox = Database.workoutBox;
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    primaryColor.withOpacity(0.1),
+                    primaryLight.withOpacity(0.05),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.sentiment_dissatisfied_outlined,
+                size: 64,
+                color: primaryColor,
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'No workouts logged',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 12),
+            workoutBox.isEmpty
+                ? Text(
+                  'Add routines before logging your workout sessions',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                )
+                : const SizedBox.shrink(),
+            const SizedBox(height: 32),
+            ElevatedButton.icon(
+              onPressed:
+                  workoutBox.isNotEmpty ? navigateToAddCalendarEntry : null,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 16,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              icon: const Icon(Icons.add),
+              label: const Text(
+                'Start session',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   void navigateToAddCalendarEntry() async {
     final mySessionBox = Database.sessionBox;
@@ -28,17 +100,18 @@ class _HistoryState extends State<History> {
     );
     print('Returned from adding calendar entry$result');
 
-    //save session to db
+    //save session to db [only after the workout is done]
     if (result != null && result is SessionDTO) {
-      print('YES!');
-      var newSessionObj = Session(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        workoutId: result.workoutId,
-        date: result.date,
-        moveRecords: [],
-      );
-      mySessionBox.add(newSessionObj);
-      setState(() {});
+      print('Saving completed workout!');
+      // var newSessionObj = Session(
+      //   id: DateTime.now().millisecondsSinceEpoch.toString(),
+      //   workoutId: result.workoutId,
+      //   date: result.date,
+      //   duration: null, // Placeholder, replace with actual duration if available
+      //   moveRecords: [],
+      // );
+      // mySessionBox.add(newSessionObj);
+      // setState(() {});
     }
   }
 
@@ -62,6 +135,7 @@ class _HistoryState extends State<History> {
     return '${months[0]} $dayStr 2026';
   }
 
+  // DTODO should be able to edit these sessions
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,68 +153,54 @@ class _HistoryState extends State<History> {
           Padding(
             padding: const EdgeInsets.only(right: 12.0),
             child: IconButton(
-              onPressed: navigateToAddCalendarEntry,
-              icon: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [primaryColor, primaryLight],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+              onPressed:
+                  Database.workoutBox.isNotEmpty
+                      ? navigateToAddCalendarEntry
+                      : null,
+              icon: Opacity(
+                opacity:
+                    Database.workoutBox.isNotEmpty
+                        ? 1.0
+                        : 0.5, // Dim when disabled
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [primaryColor, primaryLight],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  borderRadius: BorderRadius.circular(12),
+                  child: const Icon(Icons.add, color: Colors.white, size: 24),
                 ),
-                child: const Icon(Icons.add, color: Colors.white, size: 24),
+              ),
+              selectedIcon: const Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 24,
               ),
             ),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              itemBuilder:
-                  (context, index) => _buildSessionCard(
-                    Database.sessionBox.values.toList()[index],
-                    index,
-                  ),
-              itemCount: Database.sessionBox.length,
-            ),
-          ),
-          Text(
-            'Total Sessions: ${Database.sessionBox.length}',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade700,
-            ),
-          ),
-        ],
-      ),
+      body:
+          Database.sessionBox.isEmpty
+              ? _buildEmptyState()
+              : ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
+                itemBuilder:
+                    (context, index) => _buildSessionCard(
+                      Database.sessionBox.values.toList()[index],
+                      index,
+                    ),
+                itemCount: Database.sessionBox.length,
+              ),
     );
   }
-
-  // Widget historicalSessionCard(int dateVariable) {
-  //   return Container(
-  //     margin: const EdgeInsets.only(bottom: 12),
-  //     decoration: BoxDecoration(
-  //       color: surfaceColor,
-  //       borderRadius: BorderRadius.circular(16),
-  //       border: Border.all(color: Colors.grey.shade200, width: 1),
-  //     ),
-  //     child: ListView.builder(
-  //       itemBuilder: (context, idx) {
-  //         final session = Database.sessionBox.values.toList()[idx];
-  //         return _buildSessionCard(session, idx);
-  //       },
-  //       itemCount: Database.sessionBox.length,
-  //       shrinkWrap: true,
-  //       physics: const NeverScrollableScrollPhysics(),
-  //     ),
-  //   );
-  // }
 
   _buildSessionCard(Session session, int idx) {
     return Material(
