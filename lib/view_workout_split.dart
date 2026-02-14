@@ -87,6 +87,43 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
     );
   }
 
+   void renameSplitType(int idx) {
+    final myBox = Database.workoutBox;
+    final workouts = myBox.values.toList();
+    final split = workouts[idx];
+    final key = myBox.keys.elementAt(idx);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return RenameRoutineDialog(
+          initialName: split.name,
+          primaryColor: primaryColor,
+          onSave: (newName) {
+            final updatedSplit = Workout(
+              id: split.id,
+              name: newName,
+              moves: split.moves,
+            );
+            myBox.put(key, updatedSplit);
+            setState(() {});
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Renamed to $newName'),
+                backgroundColor: primaryColor,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final myBox = Database.workoutBox;
@@ -339,40 +376,5 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
     );
   }
 
-  void renameSplitType(int idx) {
-    final myBox = Database.workoutBox;
-    final workouts = myBox.values.toList();
-    final split = workouts[idx];
-    final key = myBox.keys.elementAt(idx);
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return RenameRoutineDialog(
-          initialName: split.name,
-          primaryColor: primaryColor,
-          onSave: (newName) {
-            final updatedSplit = Workout(
-              id: split.id,
-              name: newName,
-              moves: split.moves,
-            );
-            myBox.put(key, updatedSplit);
-            setState(() {});
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Renamed to $newName'),
-                backgroundColor: primaryColor,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                duration: const Duration(seconds: 2),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
+ 
 }

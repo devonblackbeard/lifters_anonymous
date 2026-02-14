@@ -56,7 +56,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [ViewWorkoutSplit(), Fasting(), History()];
+  final List<Widget> _screens = [History(), ViewWorkoutSplit(), Fasting() ];
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +71,10 @@ class _MainScreenState extends State<MainScreen> {
         },
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: const [
+            NavigationDestination(
+            icon: Icon(Icons.calendar_month_sharp),
+            label: 'History',
+          ),
           NavigationDestination(
             icon: Icon(Icons.fitness_center),
             label: 'Workout',
@@ -78,11 +82,7 @@ class _MainScreenState extends State<MainScreen> {
           NavigationDestination(
             icon: Icon(Icons.food_bank_sharp),
             label: 'Fasting',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.calendar_month_sharp),
-            label: 'History',
-          ),
+          )
         ],
       ),
     );
