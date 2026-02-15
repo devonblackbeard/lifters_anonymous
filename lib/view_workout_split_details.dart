@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lifters_anonymous/add_workout_item.dart';
@@ -110,6 +108,7 @@ class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
       builder: (context) {
         return RenameRoutineDialog(
           initialName: moves[idx].name,
+          elementToRename: 'Move',
           primaryColor: primaryColor,
           onSave: (newName) {
             final updatedMove = Move(id: moves[idx].id, name: newName);
@@ -497,6 +496,14 @@ class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
                                   color: Colors.grey.shade600,
                                 ),
                                 const SizedBox(width: 6),
+                                Text(
+                                  'View history',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey.shade600,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ],
                             ),
                           ],

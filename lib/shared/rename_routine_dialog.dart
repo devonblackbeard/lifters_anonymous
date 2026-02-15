@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class RenameRoutineDialog extends StatelessWidget {
   final String initialName;
+  final String elementToRename;
   final Color primaryColor;
   final void Function(String) onSave;
 
@@ -10,6 +11,7 @@ class RenameRoutineDialog extends StatelessWidget {
     required this.initialName,
     required this.primaryColor,
     required this.onSave,
+    required this.elementToRename
   });
 
   @override
@@ -17,12 +19,12 @@ class RenameRoutineDialog extends StatelessWidget {
     final TextEditingController controller = TextEditingController(text: initialName);
 
     return AlertDialog(
-      title: const Text('Rename Routine'),
+      title: Text('Rename $elementToRename'),
       content: TextField(
         controller: controller,
         autofocus: true,
-        decoration: const InputDecoration(
-          labelText: 'Routine Name',
+        decoration: InputDecoration(
+          //labelText: 'New $elementToRename Name',
           border: OutlineInputBorder(),
         ),
       ),

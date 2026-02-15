@@ -99,6 +99,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
         return RenameRoutineDialog(
           initialName: split.name,
           primaryColor: primaryColor,
+          elementToRename: 'Routine',
           onSave: (newName) {
             final updatedSplit = Workout(
               id: split.id,
