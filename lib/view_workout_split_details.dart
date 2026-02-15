@@ -122,7 +122,9 @@ class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
               (key) => (myBox.get(key) as Workout).id == currentWorkout.id,
             );
             myBox.put(workoutKey, updatedWorkout);
-            setState(() {});
+            setState(() {
+              currentWorkout = updatedWorkout;
+            });
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Renamed to $newName'),
