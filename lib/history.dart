@@ -88,6 +88,16 @@ class _HistoryState extends State<History> {
     );
   }
 
+  void navigateToActiveWorkout(Session session) async {
+    // Navigate and await the return
+    print('workout ID: ${session.workoutId}');
+    await Navigator.pushNamed(context, '/active_session', arguments: session);
+
+    print('RETURNED FROM ACTIVE WORKOUT');
+    // When we return, trigger rebuild to refresh data from Hive
+    setState(() {});
+  }
+
   void navigateToAddCalendarEntry() async {
     final mySessionBox = Database.sessionBox;
 
@@ -103,15 +113,17 @@ class _HistoryState extends State<History> {
     //save session to db [only after the workout is done]
     if (result != null && result is SessionDTO) {
       print('Saving completed workout!');
-      // var newSessionObj = Session(
-      //   id: DateTime.now().millisecondsSinceEpoch.toString(),
-      //   workoutId: result.workoutId,
-      //   date: result.date,
-      //   duration: null, // Placeholder, replace with actual duration if available
-      //   moveRecords: [],
-      // );
-      // mySessionBox.add(newSessionObj);
-      // setState(() {});
+      var newSessionObj = Session(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        workoutId: result.workoutId,
+        date: result.date,
+        duration:
+            null, // Placeholder, replace with actual duration if available
+        moveRecords: [],
+      );
+      mySessionBox.add(newSessionObj);
+      setState(() {});
+      navigateToActiveWorkout(newSessionObj);
     }
   }
 

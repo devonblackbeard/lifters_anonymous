@@ -43,14 +43,14 @@ class Session {
   final List<MoveRecord> moveRecords;
 
   @HiveField(4)
-  final int duration; // in minutes
+  final int? duration; // in minutes
 
   Session({
     required this.id,
     required this.workoutId,
     required this.date,
     required this.moveRecords,
-    required this.duration,
+    this.duration,
   });
 }
 

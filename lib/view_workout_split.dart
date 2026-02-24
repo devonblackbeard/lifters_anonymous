@@ -35,7 +35,9 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
         moves: [],
       );
 
-      myBox.add(newWorkout);
+      // myBox.add(newWorkout);
+      Database.workoutBox.put(newWorkout.id, newWorkout);
+
       setState(() {}); // Just trigger rebuild
       print('myBox contents: ${myBox.values.toList()}');
 
@@ -87,7 +89,7 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
     );
   }
 
-   void renameSplitType(int idx) {
+  void renameSplitType(int idx) {
     final myBox = Database.workoutBox;
     final workouts = myBox.values.toList();
     final split = workouts[idx];
@@ -376,6 +378,4 @@ class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
       ),
     );
   }
-
- 
 }

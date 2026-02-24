@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:lifters_anonymous/active_session.dart';
 import 'package:lifters_anonymous/add_workout_item.dart';
 import 'package:lifters_anonymous/history.dart';
 import 'package:lifters_anonymous/fasting.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/add_workout_split': (context) => AddWorkoutItem(type: ''),
         '/workout_split_details': (context) => ViewWorkoutSplitDetails(),
         '/settings': (context) => Settings(),
+        '/active_session': (context) => ActiveSession()
       },
       debugShowCheckedModeBanner: false,
     );
