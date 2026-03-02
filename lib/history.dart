@@ -108,9 +108,9 @@ class _HistoryState extends State<History> {
         builder: (context) => const AddWorkoutItem(type: 'Session'),
       ),
     );
-    print('Returned from adding calendar entry$result');
+    print('Returned from adding calendar entry $result');
 
-    //save session to db [only after the workout is done]
+    //save session to db
     if (result != null && result is SessionDTO) {
       print('Saving completed workout!');
       var newSessionObj = Session(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lifters_anonymous/models/workout.dart';
+import 'package:lifters_anonymous/models/workout_dtos.dart';
 import 'package:lifters_anonymous/utils/database.dart';
 
 class ActiveSession extends StatefulWidget {
@@ -15,12 +16,13 @@ class _ActiveSessionState extends State<ActiveSession> {
     final session = ModalRoute.of(context)!.settings.arguments as Session;
 
     // Get the workout from the session's workoutId
-    //final workout = Database.workoutBox.get(session.workoutId);
+    // final workout = Database.workoutBox.get(session.workoutId);
 
     final workout = Database.workoutBox.get(session.workoutId);
     // print(
     //   'ActiveSession: Loaded workout with id ${session.workoutId} - ${workout?.name}',
     // );
+
     if (workout == null) {
       return const Scaffold(body: Center(child: Text('Workout not found')));
     }
@@ -38,9 +40,19 @@ class _ActiveSessionState extends State<ActiveSession> {
             //subtitle: Text('${move.} sets × ${move.reps} reps'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
+              var moveRecord = MoveRecordDTO(moveId: move.id, sets: [], sessionId: session.id);
               // Handle move tap
               print('Tapped on ${move.name}');
               // You could navigate to a detail screen or show a dialog
+              // Navigator.pushNamed(context, '/move_details', arguments: {
+              //   'move': move,
+              //   'sessionId': session.id,
+              // });
+              Navigator.pushNamed(
+                context,
+                '/move_details',
+                arguments: moveRecord,
+              );
             },
           );
         },

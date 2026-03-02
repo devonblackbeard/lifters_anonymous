@@ -36,14 +36,14 @@ class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
     }
   }
 
-  void handleViewMove(String moveName) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ViewMoveHistory(moveName: moveName),
-      ),
-    );
-  }
+  // void handleViewMove(String moveName) async {
+  //   final result = await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => ViewMoveHistory(moveName: moveName),
+  //     ),
+  //   );
+  // }
 
   void navigateToAddMove() async {
     final result = await Navigator.push(

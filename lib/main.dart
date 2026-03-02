@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:lifters_anonymous/active_session.dart';
+import 'package:lifters_anonymous/components/active_workout/active_session.dart';
 import 'package:lifters_anonymous/add_workout_item.dart';
+import 'package:lifters_anonymous/components/active_workout/move_details.dart';
 import 'package:lifters_anonymous/history.dart';
 import 'package:lifters_anonymous/fasting.dart';
 import 'package:lifters_anonymous/models/workout.dart';
 import 'package:lifters_anonymous/settings.dart';
-import 'package:lifters_anonymous/view_workout_split.dart';
-import 'package:lifters_anonymous/view_workout_split_details.dart';
+import 'package:lifters_anonymous/components/config_workout/view_workout_split.dart';
+import 'package:lifters_anonymous/components/config_workout/view_workout_split_details.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
         '/add_workout_split': (context) => AddWorkoutItem(type: ''),
         '/workout_split_details': (context) => ViewWorkoutSplitDetails(),
         '/settings': (context) => Settings(),
-        '/active_session': (context) => ActiveSession()
+        '/active_session': (context) => ActiveSession(),
+        '/move_details': (context) => MoveDetails(),
       },
       debugShowCheckedModeBanner: false,
     );
@@ -60,7 +62,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [History(), ViewWorkoutSplit(), Fasting(), Settings() ];
+  final List<Widget> _screens = [
+    History(),
+    ViewWorkoutSplit(),
+    Fasting(),
+    Settings(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
         },
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: const [
-            NavigationDestination(
+          NavigationDestination(
             icon: Icon(Icons.calendar_month_sharp),
             label: 'History',
           ),
@@ -86,7 +93,7 @@ class _MainScreenState extends State<MainScreen> {
           NavigationDestination(
             icon: Icon(Icons.food_bank_sharp),
             label: 'Fasting',
-          )
+          ),
         ],
       ),
     );

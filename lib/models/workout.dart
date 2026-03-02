@@ -56,12 +56,14 @@ class Session {
 
 class MoveRecord {
   final String moveId;
-  final int setsCompleted;
-  final int repsCompleted;
+  final List<SetRecord> sets;
 
-  MoveRecord({
-    required this.moveId,
-    required this.setsCompleted,
-    required this.repsCompleted,
-  });
+  MoveRecord({required this.moveId, required this.sets});
+}
+
+class SetRecord {
+  final int weight;
+  final int reps;
+
+  SetRecord({required this.weight, required this.reps});
 }

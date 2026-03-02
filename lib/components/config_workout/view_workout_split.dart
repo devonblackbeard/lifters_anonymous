@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lifters_anonymous/utils/database.dart';
 import 'package:lifters_anonymous/models/workout.dart';
-import 'add_workout_item.dart';
-import 'shared/rename_routine_dialog.dart';
+import '../../add_workout_item.dart';
+import '../../shared/rename_routine_dialog.dart';
 
 class ViewWorkoutSplit extends StatefulWidget {
   const ViewWorkoutSplit({super.key});
