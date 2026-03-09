@@ -20,6 +20,8 @@ TODOs:
 - have a stats page, ie how many workouts in total have been logged.
 - show max weight per move (PR)
 - give reminders when its time to start a fast
+- be able to return to an active workout
+- be able to start a workout from the split config page
 - create settings page:
     - kg/lbs
     - PR vs PB
