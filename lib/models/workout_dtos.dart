@@ -4,7 +4,9 @@ class SessionDTO {
   final String workoutId;
   final DateTime date;
 
-  SessionDTO({required this.workoutId, required this.date});
+  final bool isActive;
+
+  SessionDTO({required this.workoutId, required this.date, required this.isActive});
 }
 
 class MoveRecordDTO {

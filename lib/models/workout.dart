@@ -45,12 +45,16 @@ class Session {
   @HiveField(4)
   final int? duration; // in minutes
 
+  @HiveField(5)
+  bool isActive;
+
   Session({
     required this.id,
     required this.workoutId,
     required this.date,
     required this.moveRecords,
     this.duration,
+    this.isActive = true,
   });
 }
 

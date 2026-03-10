@@ -127,6 +127,7 @@ class _HistoryState extends State<History> {
     }
   }
 
+  // DTODO: Move to util
   String formatDate(int day) {
     const months = [
       'Jan',
@@ -222,6 +223,8 @@ class _HistoryState extends State<History> {
         onTap: () {
           // Handle tap
           // print('Tapped on entry $dateVariable');
+          print("uooo");
+          navigateToActiveWorkout(session);
         },
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -320,8 +323,31 @@ class _HistoryState extends State<History> {
                   ],
                 ),
               ),
+              session.isActive
+                  ? Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 199, 248, 3),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      'Active',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                  : const SizedBox.shrink(),
               // Chevron
-              Icon(Icons.chevron_right, size: 28, color: Colors.grey.shade400),
+              Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: Icon(Icons.chevron_right, size: 28, color: Colors.grey.shade400),
+              ),
             ],
           ),
         ),

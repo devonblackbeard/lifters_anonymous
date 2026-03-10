@@ -11,6 +11,10 @@ class ActiveSession extends StatefulWidget {
 }
 
 class _ActiveSessionState extends State<ActiveSession> {
+  static const Color primaryColor = Color(0xFF922E8D);
+  static const Color primaryLight = Color(0xFFB85FB3);
+  static const Color surfaceColor = Color(0xFFF5F5F5);
+
   @override
   Widget build(BuildContext context) {
     final session = ModalRoute.of(context)!.settings.arguments as Session;
@@ -29,33 +33,102 @@ class _ActiveSessionState extends State<ActiveSession> {
 
     return Scaffold(
       appBar: AppBar(title: Text(workout.name)),
-      body: ListView.builder(
-        itemCount: workout.moves.length,
-        itemBuilder: (context, index) {
-          final move = workout.moves[index];
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: workout.moves.length,
+              itemBuilder: (context, index) {
+                final move = workout.moves[index];
 
-          return ListTile(
-            leading: CircleAvatar(child: Text('${index + 1}')),
-            title: Text(move.name),
-            //subtitle: Text('${move.} sets × ${move.reps} reps'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              var moveRecord = MoveRecordDTO(moveId: move.id, sets: [], sessionId: session.id);
-              // Handle move tap
-              print('Tapped on ${move.name}');
-              // You could navigate to a detail screen or show a dialog
-              // Navigator.pushNamed(context, '/move_details', arguments: {
-              //   'move': move,
-              //   'sessionId': session.id,
-              // });
-              Navigator.pushNamed(
-                context,
-                '/move_details',
-                arguments: moveRecord,
-              );
-            },
-          );
-        },
+                return ListTile(
+                  leading: CircleAvatar(child: Text('${index + 1}')),
+                  title: Text(move.name),
+                  //subtitle: Text('${move.} sets × ${move.reps} reps'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    var moveRecord = MoveRecordDTO(
+                      moveId: move.id,
+                      sets: [],
+                      sessionId: session.id,
+                    );
+                    // Handle move tap
+                    print('Tapped on ${move.name}');
+                    // You could navigate to a detail screen or show a dialog
+                    // Navigator.pushNamed(context, '/move_details', arguments: {
+                    //   'move': move,
+                    //   'sessionId': session.id,
+                    // });
+                    Navigator.pushNamed(
+                      context,
+                      '/move_details',
+                      arguments: moveRecord,
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+
+          Container(
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.06),
+                  blurRadius: 12,
+                  offset: const Offset(0, -2),
+                ),
+              ],
+            ),
+            child:
+                session.isActive
+                    ? SafeArea(
+                      top: false,
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 54,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // TODO: Implement end session logic here
+                            session.isActive = false;
+                            setState(() {});
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: const Text('Nice work!'),
+                                backgroundColor: primaryColor,
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                duration: const Duration(seconds: 2),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: const Text(
+                            'End Workout',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    : null,
+          ),
+        ],
       ),
     );
   }

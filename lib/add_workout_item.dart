@@ -55,7 +55,11 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
         // });
         Navigator.pop(
           context,
-          SessionDTO(workoutId: selectedWorkoutId!, date: selectedDate),
+          SessionDTO(
+            workoutId: selectedWorkoutId!,
+            date: selectedDate,
+            isActive: true,
+          ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -177,7 +181,7 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
               ),
               const SizedBox(height: 12),
               const Text(
-                'Start Your Session',
+                'Start Your Workout',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 22,
@@ -185,13 +189,13 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                'Select a workout and date to begin',
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.9),
-                  fontSize: 14,
-                ),
-              ),
+              // Text(
+              //   'Select a workout and date to begin',
+              //   style: TextStyle(
+              //     color: Colors.white.withOpacity(0.9),
+              //     fontSize: 14,
+              //   ),
+              // ),
             ],
           ),
         ),
