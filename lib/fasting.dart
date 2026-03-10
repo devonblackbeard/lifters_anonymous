@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:lifters_anonymous/utils/styles.dart';
+
 class Fasting extends StatefulWidget {
   const Fasting({super.key});
 
@@ -13,10 +15,6 @@ class _FastingState extends State<Fasting> {
   Duration fastingDuration = Duration();
   Timer? _timer;
 
-  // Define consistent brand colors
-  static const Color primaryColor = Color(0xFF922E8D);
-  static const Color primaryLight = Color(0xFFB85FB3);
-  static const Color surfaceColor = Color(0xFFF5F5F5);
 
   @override
   void initState() {

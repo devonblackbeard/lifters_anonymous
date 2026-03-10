@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lifters_anonymous/utils/database.dart';
 import 'package:lifters_anonymous/models/workout.dart';
+import 'package:lifters_anonymous/utils/styles.dart';
 import '../../add_workout_item.dart';
 import '../../shared/rename_routine_dialog.dart';
 
@@ -14,10 +15,6 @@ class ViewWorkoutSplit extends StatefulWidget {
 
 class _ViewWorkoutSplitState extends State<ViewWorkoutSplit> {
   // Define consistent brand colors
-  static const Color primaryColor = Color(0xFF922E8D);
-  static const Color primaryLight = Color(0xFFB85FB3);
-  static const Color surfaceColor = Color(0xFFF5F5F5);
-
   void navigateToAddSplit() async {
     final myBox = Database.workoutBox;
 

@@ -4,6 +4,7 @@ import 'package:lifters_anonymous/add_workout_item.dart';
 import 'package:lifters_anonymous/shared/rename_routine_dialog.dart';
 import 'package:lifters_anonymous/models/workout.dart';
 import 'package:lifters_anonymous/utils/database.dart';
+import 'package:lifters_anonymous/utils/styles.dart';
 import 'package:lifters_anonymous/view_move_history.dart';
 
 class ViewWorkoutSplitDetails extends StatefulWidget {
@@ -17,11 +18,6 @@ class ViewWorkoutSplitDetails extends StatefulWidget {
 class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
   late Workout currentWorkout;
   bool _isInitialized = false;
-
-  // Define consistent brand colors
-  static const Color primaryColor = Color(0xFF922E8D);
-  static const Color primaryLight = Color(0xFFB85FB3);
-  static const Color surfaceColor = Color(0xFFF5F5F5);
 
   @override
   void didChangeDependencies() {

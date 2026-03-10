@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lifters_anonymous/models/workout_dtos.dart';
+import 'package:lifters_anonymous/utils/styles.dart';
 
 class MoveDetails extends StatefulWidget {
   const MoveDetails({super.key});
@@ -9,10 +10,6 @@ class MoveDetails extends StatefulWidget {
 }
 
 class _MoveDetailsState extends State<MoveDetails> {
-  // App brand colors
-  static const Color primaryColor = Color(0xFF922E8D);
-  static const Color primaryLight = Color(0xFFB85FB3);
-  static const Color surfaceColor = Color(0xFFF5F5F5);
 
   List<Map<String, dynamic>> sets = [
     {"weight": "", "reps": ""},

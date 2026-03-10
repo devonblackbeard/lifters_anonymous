@@ -22,6 +22,7 @@ TODOs:
 - give reminders when its time to start a fast
 - be able to return to an active workout
 - be able to start a workout from the split config page
+- show confetti when workout complete, and show recap modal
 - create settings page:
     - kg/lbs
     - PR vs PB

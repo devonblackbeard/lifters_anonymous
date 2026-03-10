@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lifters_anonymous/models/workout.dart';
 import 'package:lifters_anonymous/models/workout_dtos.dart';
 import 'package:lifters_anonymous/utils/database.dart';
+import 'package:lifters_anonymous/utils/styles.dart';
 
 class ActiveSession extends StatefulWidget {
   const ActiveSession({super.key});
@@ -11,9 +12,6 @@ class ActiveSession extends StatefulWidget {
 }
 
 class _ActiveSessionState extends State<ActiveSession> {
-  static const Color primaryColor = Color(0xFF922E8D);
-  static const Color primaryLight = Color(0xFFB85FB3);
-  static const Color surfaceColor = Color(0xFFF5F5F5);
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +104,7 @@ class _ActiveSessionState extends State<ActiveSession> {
                                 duration: const Duration(seconds: 2),
                               ),
                             );
+                            Navigator.pop(context); // CHATGPT: is this the correct way to return to the previous screen after ending the session?
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,

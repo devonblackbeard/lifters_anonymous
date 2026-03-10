@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lifters_anonymous/models/workout_dtos.dart';
 import 'package:lifters_anonymous/utils/database.dart';
+import 'package:lifters_anonymous/utils/styles.dart';
 
 class AddWorkoutItem extends StatefulWidget {
   final String type;
@@ -15,11 +16,6 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
   final TextEditingController _controller = TextEditingController();
   String? selectedWorkoutId;
   DateTime selectedDate = DateTime.now();
-
-  // Define your brand color
-  static const Color primaryColor = Color(0xFF922E8D); // Your purple color
-  static const Color primaryLight = Color(0xFFB85FB3);
-  static const Color surfaceColor = Color(0xFFF5F5F5);
 
   @override
   void dispose() {
@@ -436,7 +432,7 @@ class _AddWorkoutItemState extends State<AddWorkoutItem> {
           decoration: InputDecoration(
             hintText:
                 widget.type == 'Split'
-                    ? "e.g., Push, Pull, Legs"
+                    ? "e.g. Chest, Back, Push, Pull etc"
                     : "e.g., Bench Press, Squats",
             hintStyle: TextStyle(
               color: Colors.grey.shade400,

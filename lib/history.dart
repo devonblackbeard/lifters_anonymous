@@ -3,6 +3,7 @@ import 'package:lifters_anonymous/add_workout_item.dart';
 import 'package:lifters_anonymous/models/workout.dart';
 import 'package:lifters_anonymous/models/workout_dtos.dart';
 import 'package:lifters_anonymous/utils/database.dart';
+import 'package:lifters_anonymous/utils/styles.dart';
 
 class History extends StatefulWidget {
   const History({super.key});
@@ -12,10 +13,6 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-  // Define consistent brand colors
-  static const Color primaryColor = Color(0xFF922E8D);
-  static const Color primaryLight = Color(0xFFB85FB3);
-  //static const Color surfaceColor = Color(0xFFF5F5F5);
 
   Widget _buildEmptyState() {
     final workoutBox = Database.workoutBox;
@@ -112,7 +109,7 @@ class _HistoryState extends State<History> {
 
     //save session to db
     if (result != null && result is SessionDTO) {
-      print('Saving completed workout!');
+      print('Saving active session!');
       var newSessionObj = Session(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         workoutId: result.workoutId,
