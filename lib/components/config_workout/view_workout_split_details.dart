@@ -54,6 +54,7 @@ class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
       final newMove = Move(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: result.trim(),
+        personalRecord: 0
       );
 
       // Create updated workout with the new move
@@ -107,7 +108,7 @@ class _ViewWorkoutSplitDetailsState extends State<ViewWorkoutSplitDetails> {
           elementToRename: 'Move',
           primaryColor: primaryColor,
           onSave: (newName) {
-            final updatedMove = Move(id: moves[idx].id, name: newName);
+            final updatedMove = Move(id: moves[idx].id, name: newName, personalRecord: moves[idx].personalRecord);
             final updatedMoves = List<Move>.from(moves)..[idx] = updatedMove;
             final updatedWorkout = Workout(
               id: currentWorkout.id,

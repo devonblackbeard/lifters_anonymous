@@ -25,7 +25,10 @@ class Move {
   @HiveField(1)
   final String name;
 
-  Move({required this.id, required this.name});
+  @HiveField(2)
+  final int personalRecord; // in lbs
+
+  Move({required this.id, required this.name, required this.personalRecord});
 }
 
 @HiveType(typeId: 2)

@@ -228,7 +228,7 @@ class _MoveDetailsState extends State<MoveDetails> {
                     decoration: InputDecoration(
                       hintText: '0',
                       hintStyle: TextStyle(color: Colors.grey.shade400),
-                      suffixText: 'kg',
+                      suffixText: 'lbs',
                       suffixStyle: TextStyle(
                         color: Colors.grey.shade600,
                         fontWeight: FontWeight.w500,

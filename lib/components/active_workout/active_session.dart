@@ -104,7 +104,7 @@ class _ActiveSessionState extends State<ActiveSession> {
                                 duration: const Duration(seconds: 2),
                               ),
                             );
-                            Navigator.pop(context); // CHATGPT: is this the correct way to return to the previous screen after ending the session?
+                            Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
