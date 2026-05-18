@@ -47,6 +47,7 @@ class _ActiveSessionState extends State<ActiveSession> {
                   onTap: () {
                     var moveRecord = MoveRecordDTO(
                       moveId: move.id,
+                      moveName: move.name,
                       sets: [],
                       sessionId: session.id,
                     );
@@ -89,7 +90,7 @@ class _ActiveSessionState extends State<ActiveSession> {
                         height: 54,
                         child: ElevatedButton(
                           onPressed: () {
-                            // TODO: Implement end session logic here
+                            // DTODO: Implement end session logic here
                             session.isActive = false;
                             setState(() {});
 

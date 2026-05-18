@@ -5,7 +5,6 @@ import 'package:lifters_anonymous/shared/rename_routine_dialog.dart';
 import 'package:lifters_anonymous/models/workout.dart';
 import 'package:lifters_anonymous/utils/database.dart';
 import 'package:lifters_anonymous/utils/styles.dart';
-import 'package:lifters_anonymous/view_move_history.dart';
 
 class ViewWorkoutSplitDetails extends StatefulWidget {
   const ViewWorkoutSplitDetails({super.key});

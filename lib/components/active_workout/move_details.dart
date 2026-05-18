@@ -10,7 +10,6 @@ class MoveDetails extends StatefulWidget {
 }
 
 class _MoveDetailsState extends State<MoveDetails> {
-
   List<Map<String, dynamic>> sets = [
     {"weight": "", "reps": ""},
   ];
@@ -29,19 +28,11 @@ class _MoveDetailsState extends State<MoveDetails> {
         title: Column(
           children: [
             Text(
-              'Exercise',
+              moveDetails.moveName,
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 20,
                 color: Colors.black87,
-              ),
-            ),
-            Text(
-              'Track Your Sets',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 13,
-                color: Colors.grey.shade600,
               ),
             ),
           ],
@@ -115,10 +106,10 @@ class _MoveDetailsState extends State<MoveDetails> {
                 height: 54,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Implement save logic here
+                    // DTODO: Implement save logic here
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: const Text('Session saved!'),
+                        content: const Text('Move saved!'),
                         backgroundColor: primaryColor,
                         behavior: SnackBarBehavior.floating,
                         shape: RoundedRectangleBorder(
@@ -137,7 +128,7 @@ class _MoveDetailsState extends State<MoveDetails> {
                     elevation: 0,
                   ),
                   child: const Text(
-                    'Save Session',
+                    'Save Move',
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,

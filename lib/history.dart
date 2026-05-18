@@ -118,7 +118,7 @@ class _HistoryState extends State<History> {
             null, // Placeholder, replace with actual duration if available
         moveRecords: [],
       );
-      mySessionBox.add(newSessionObj);
+      mySessionBox.put(newSessionObj.id, newSessionObj); // DTODO: dont use add, use Put to set the ID explicitly
       setState(() {});
       navigateToActiveWorkout(newSessionObj);
     }
