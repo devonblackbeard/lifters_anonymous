@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:lifters_anonymous/components/active_workout/active_session.dart';
-import 'package:lifters_anonymous/add_workout_item.dart';
-import 'package:lifters_anonymous/components/active_workout/move_details.dart';
-import 'package:lifters_anonymous/history.dart';
-import 'package:lifters_anonymous/fasting.dart';
-import 'package:lifters_anonymous/models/workout.dart';
-import 'package:lifters_anonymous/settings.dart';
-import 'package:lifters_anonymous/components/config_workout/view_workout_split.dart';
-import 'package:lifters_anonymous/components/config_workout/view_workout_split_details.dart';
+import 'package:repify/components/active_workout/active_session.dart';
+import 'package:repify/add_workout_item.dart';
+import 'package:repify/components/active_workout/move_details.dart';
+import 'package:repify/history.dart';
+import 'package:repify/fasting.dart';
+import 'package:repify/models/workout.dart';
+import 'package:repify/settings.dart';
+import 'package:repify/components/config_workout/view_workout_split.dart';
+import 'package:repify/components/config_workout/view_workout_split_details.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

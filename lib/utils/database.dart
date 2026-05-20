@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:lifters_anonymous/models/workout.dart';
+import 'package:repify/models/workout.dart';
 
 class Database {
   //static Box get workoutBox => Hive.box('workoutDataBox');

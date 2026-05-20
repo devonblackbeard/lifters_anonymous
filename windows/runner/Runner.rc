@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "lifters_anonymous" "\0"
+            VALUE "FileDescription", "repify" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "lifters_anonymous" "\0"
+            VALUE "InternalName", "repify" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "lifters_anonymous.exe" "\0"
-            VALUE "ProductName", "lifters_anonymous" "\0"
+            VALUE "OriginalFilename", "repify.exe" "\0"
+            VALUE "ProductName", "repify" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

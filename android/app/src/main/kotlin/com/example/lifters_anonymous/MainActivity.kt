@@ -1,4 +1,4 @@
-package com.example.lifters_anonymous
+package com.example.repify
 
 import io.flutter.embedding.android.FlutterActivity
 

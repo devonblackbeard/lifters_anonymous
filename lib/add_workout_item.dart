@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lifters_anonymous/models/workout_dtos.dart';
-import 'package:lifters_anonymous/utils/database.dart';
-import 'package:lifters_anonymous/utils/styles.dart';
+import 'package:repify/models/workout_dtos.dart';
+import 'package:repify/utils/database.dart';
+import 'package:repify/utils/styles.dart';
 
 class AddWorkoutItem extends StatefulWidget {
   final String type;

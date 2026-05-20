@@ -1,6 +1,6 @@
 {
-    "name": "lifters_anonymous",
-    "short_name": "lifters_anonymous",
+    "name": "repify",
+    "short_name": "repify",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

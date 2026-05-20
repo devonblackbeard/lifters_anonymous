@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lifters_anonymous/add_workout_item.dart';
-import 'package:lifters_anonymous/models/workout.dart';
-import 'package:lifters_anonymous/models/workout_dtos.dart';
-import 'package:lifters_anonymous/utils/database.dart';
-import 'package:lifters_anonymous/utils/styles.dart';
+import 'package:repify/add_workout_item.dart';
+import 'package:repify/models/workout.dart';
+import 'package:repify/models/workout_dtos.dart';
+import 'package:repify/utils/database.dart';
+import 'package:repify/utils/styles.dart';
 
 class History extends StatefulWidget {
   const History({super.key});
@@ -13,7 +13,6 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-
   Widget _buildEmptyState() {
     final workoutBox = Database.workoutBox;
     return Center(
@@ -118,7 +117,10 @@ class _HistoryState extends State<History> {
             null, // Placeholder, replace with actual duration if available
         moveRecords: [],
       );
-      mySessionBox.put(newSessionObj.id, newSessionObj); // DTODO: dont use add, use Put to set the ID explicitly
+      mySessionBox.put(
+        newSessionObj.id,
+        newSessionObj,
+      ); // DTODO: dont use add, use Put to set the ID explicitly
       setState(() {});
       navigateToActiveWorkout(newSessionObj);
     }
@@ -148,6 +150,10 @@ class _HistoryState extends State<History> {
   // DTODO should be able to edit these sessions
   @override
   Widget build(BuildContext context) {
+    var hasActiveSession = Database.sessionBox.values.any(
+      (session) => session.isActive,
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -164,9 +170,24 @@ class _HistoryState extends State<History> {
             padding: const EdgeInsets.only(right: 12.0),
             child: IconButton(
               onPressed:
-                  Database.workoutBox.isNotEmpty
-                      ? navigateToAddCalendarEntry
-                      : null,
+                  hasActiveSession
+                      ? () => showDialog(
+                        context: context,
+                        builder:
+                            (_) => AlertDialog(
+                              title: const Text('Active Session In Progress'),
+                              content: const Text(
+                                'End your current session before starting a new one.',
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                      )
+                      : navigateToAddCalendarEntry,
               icon: Opacity(
                 opacity:
                     Database.workoutBox.isNotEmpty
@@ -212,15 +233,49 @@ class _HistoryState extends State<History> {
     );
   }
 
+  // void _showActiveSessionDialog(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder:
+  //         (context) => Padding(
+  //           padding: const EdgeInsets.all(24.0),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               const Icon(
+  //                 Icons.warning_amber_rounded,
+  //                 size: 48,
+  //                 color: Colors.orange,
+  //               ),
+  //               const SizedBox(height: 12),
+  //               const Text(
+  //                 'Active Session In Progress',
+  //                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  //               ),
+  //               const SizedBox(height: 8),
+  //               const Text(
+  //                 'Please end your current session before starting a new one.',
+  //               ),
+  //               const SizedBox(height: 24),
+  //               SizedBox(
+  //                 width: double.infinity,
+  //                 child: ElevatedButton(
+  //                   onPressed: () => Navigator.of(context).pop(),
+  //                   child: const Text('Got it'),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //   );
+  // }
+
   _buildSessionCard(Session session, int idx) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: () {
-          // Handle tap
-          // print('Tapped on entry $dateVariable');
-          print("uooo");
           navigateToActiveWorkout(session);
         },
         child: Padding(
@@ -343,7 +398,11 @@ class _HistoryState extends State<History> {
               // Chevron
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),
-                child: Icon(Icons.chevron_right, size: 28, color: Colors.grey.shade400),
+                child: Icon(
+                  Icons.chevron_right,
+                  size: 28,
+                  color: Colors.grey.shade400,
+                ),
               ),
             ],
           ),

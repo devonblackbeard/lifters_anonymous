@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:lifters_anonymous/utils/styles.dart';
+import 'package:repify/utils/styles.dart';
 
 class Fasting extends StatefulWidget {
   const Fasting({super.key});

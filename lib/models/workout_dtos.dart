@@ -1,4 +1,4 @@
-import 'package:lifters_anonymous/models/workout.dart';
+import 'package:repify/models/workout.dart';
 
 class SessionDTO {
   final String workoutId;
