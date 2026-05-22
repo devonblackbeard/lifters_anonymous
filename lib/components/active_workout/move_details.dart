@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:repify/models/workout.dart';
 import 'package:repify/models/workout_dtos.dart';
+import 'package:repify/utils/database.dart';
 import 'package:repify/utils/styles.dart';
 
 class MoveDetails extends StatefulWidget {
@@ -10,14 +12,38 @@ class MoveDetails extends StatefulWidget {
 }
 
 class _MoveDetailsState extends State<MoveDetails> {
-  List<Map<String, dynamic>> sets = [
-    {"weight": "", "reps": ""},
-  ];
+  late List<Map<String, dynamic>> sets;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize with empty set, will be populated in build
+    sets = [{"weight": "", "reps": ""}];
+  }
 
   @override
   Widget build(BuildContext context) {
     final moveDetails =
         ModalRoute.of(context)!.settings.arguments as MoveRecordDTO;
+
+    final session = Database.sessionBox.get(moveDetails.sessionId);
+    
+    // Populate sets from saved session data on first build
+    if (session != null && sets.length == 1 && sets[0]["weight"] == "") {
+      final savedMoveRecord = session.moveRecords.firstWhere(
+        (record) => record.moveId == moveDetails.moveId,
+        orElse: () => MoveRecord(moveId: moveDetails.moveId, sets: []),
+      );
+      
+      if (savedMoveRecord.sets.isNotEmpty) {
+        sets = savedMoveRecord.sets
+            .map((setRecord) => {
+              "weight": setRecord.weight.toString(),
+              "reps": setRecord.reps.toString(),
+            })
+            .toList();
+      }
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -106,18 +132,77 @@ class _MoveDetailsState extends State<MoveDetails> {
                 height: 54,
                 child: ElevatedButton(
                   onPressed: () {
-                    // DTODO: Implement save logic here
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text('Move saved!'),
-                        backgroundColor: primaryColor,
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                    // Convert sets to SetRecord objects
+                    final setRecords =
+                        sets
+                            .where(
+                              (set) =>
+                                  set["weight"].toString().isNotEmpty &&
+                                  set["reps"].toString().isNotEmpty,
+                            )
+                            .map(
+                              (set) => SetRecord(
+                                weight: int.parse(set["weight"].toString()),
+                                reps: int.parse(set["reps"].toString()),
+                              ),
+                            )
+                            .toList();
+
+                    if (setRecords.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text(
+                            'Please add at least one set with weight and reps',
+                          ),
+                          backgroundColor: Colors.red.shade400,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          duration: const Duration(seconds: 2),
                         ),
-                        duration: const Duration(seconds: 2),
-                      ),
+                      );
+                      return;
+                    }
+
+                    // Get the session and add the move record
+                    final session = Database.sessionBox.get(
+                      moveDetails.sessionId,
                     );
+                    if (session != null) {
+                      final moveRecord = MoveRecord(
+                        moveId: moveDetails.moveId,
+                        sets: setRecords,
+                      );
+                      session.moveRecords.add(moveRecord);
+                      Database.sessionBox.put(session.id, session);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Move saved!'),
+                          backgroundColor: primaryColor,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          duration: const Duration(seconds: 2),
+                        ),
+                      );
+
+                      Navigator.pop(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Error: Session not found'),
+                          backgroundColor: Colors.red.shade400,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          duration: const Duration(seconds: 2),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryColor,

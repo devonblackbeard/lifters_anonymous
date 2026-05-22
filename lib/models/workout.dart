@@ -66,6 +66,9 @@ class MoveRecord {
   final List<SetRecord> sets;
 
   MoveRecord({required this.moveId, required this.sets});
+
+  @override
+  String toString() => 'Move Record(move: $moveId, sets: ${sets.length})';
 }
 
 class SetRecord {
